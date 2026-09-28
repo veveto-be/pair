@@ -14,9 +14,18 @@
         <div>
           <p class="eyebrow">PAIR SUMMARY MAKER</p>
           <h1>페어 핵심 요약 편집기</h1>
-          <p class="muted">입력한 내용은 브라우저에 자동 저장됩니다.</p>
+          <p class="muted">입력 내용은 브라우저에 자동 저장됩니다.</p>
         </div>
-        <button id="resetBtn" class="ghost-btn" type="button">초기화</button>
+        <button id="resetBtn" class="btn" type="button">초기화</button>
+      </div>
+
+      <div class="theme-row">
+        <div class="theme-label">
+          <span>테마 컬러</span>
+          <small>자유롭게 변경 가능</small>
+        </div>
+        <input id="themeColor" type="color" value="#6b6280" aria-label="테마 컬러 선택" />
+        <input id="themeHex" type="text" value="#6b6280" maxlength="7" aria-label="테마 컬러 HEX" />
       </div>
 
       <div class="editor-grid">
@@ -30,7 +39,7 @@
           <input data-key="pair" placeholder="페어명" />
         </label>
 
-        <label>
+        <label class="full">
           <span>캐릭터명</span>
           <input data-key="names" placeholder="캐릭터 A × 캐릭터 B" />
         </label>
@@ -47,7 +56,7 @@
 
         <label class="full">
           <span>세계관 요약</span>
-          <textarea data-key="world" rows="4" placeholder="작품을 모르는 사람도 이해할 수 있을 정도로만 간단히"></textarea>
+          <textarea data-key="world" rows="4" placeholder="작품을 모르는 사람도 이해할 수 있을 정도로 간단히"></textarea>
         </label>
 
         <fieldset>
@@ -68,7 +77,7 @@
 
         <label class="full">
           <span>관계성</span>
-          <textarea data-key="dynamic" rows="4" placeholder="과거와 현재 관계, 함께 있을 때의 분위기와 거리감"></textarea>
+          <textarea data-key="dynamic" rows="4" placeholder="과거와 현재 관계, 둘이 함께 있을 때의 분위기와 거리감"></textarea>
         </label>
 
         <label>
@@ -103,39 +112,39 @@
       </div>
 
       <div class="actions">
-        <button id="saveJsonBtn" type="button">JSON 저장</button>
-        <label class="file-btn">
+        <button id="saveJsonBtn" class="btn" type="button">JSON 저장</button>
+        <label class="btn file-btn">
           JSON 불러오기
           <input id="loadJsonInput" type="file" accept=".json,application/json" />
         </label>
-        <button id="downloadPngBtn" class="primary" type="button">PNG 저장</button>
+        <button id="downloadPngBtn" class="btn primary" type="button">PNG 저장</button>
       </div>
     </section>
 
     <section class="preview-panel">
       <div id="captureArea" class="sheet">
         <header class="sheet-head">
-          <div>
+          <div class="title-block">
             <p class="sheet-kicker" id="pWork">작품명</p>
             <h2 id="pPair">페어명</h2>
             <p class="sheet-names" id="pNames">캐릭터 A × 캐릭터 B</p>
           </div>
-          <div class="keyword-pill" id="pKeywords">관계 키워드</div>
+          <div class="keyword-box" id="pKeywords">관계 키워드</div>
         </header>
 
         <section class="summary-block accent">
-          <h3>관계 요약</h3>
+          <div class="section-label">관계 요약</div>
           <p id="pRelation">둘이 어떤 사이인지 한눈에 이해할 수 있는 핵심 요약이 들어갑니다.</p>
         </section>
 
         <section class="summary-block">
-          <h3>세계관 요약</h3>
+          <div class="section-label">세계관 요약</div>
           <p id="pWorld">관계 이해에 필요한 세계관과 상황만 간단히 적습니다.</p>
         </section>
 
         <div class="character-grid">
           <article class="character-card">
-            <span class="char-tag">A</span>
+            <div class="section-label">캐릭터 A</div>
             <h3 id="pAName">캐릭터 A</h3>
             <p class="meta" id="pAInfo">나이 · 소속 · 역할</p>
             <p class="keywords" id="pAKeywords">성격 키워드</p>
@@ -143,7 +152,7 @@
           </article>
 
           <article class="character-card">
-            <span class="char-tag">B</span>
+            <div class="section-label">캐릭터 B</div>
             <h3 id="pBName">캐릭터 B</h3>
             <p class="meta" id="pBInfo">나이 · 소속 · 역할</p>
             <p class="keywords" id="pBKeywords">성격 키워드</p>
@@ -152,46 +161,46 @@
         </div>
 
         <section class="summary-block">
-          <h3>관계성</h3>
+          <div class="section-label">관계성</div>
           <p id="pDynamic">과거와 현재 관계, 둘이 함께 있을 때의 분위기와 거리감을 적습니다.</p>
         </section>
 
         <div class="feeling-grid">
           <article>
-            <h3 id="aArrowTitle">A → B</h3>
+            <div class="section-label" id="aArrowTitle">A → B</div>
             <p id="pAToB">A가 B를 바라보는 감정과 태도.</p>
           </article>
           <article>
-            <h3 id="bArrowTitle">B → A</h3>
+            <div class="section-label" id="bArrowTitle">B → A</div>
             <p id="pBToA">B가 A를 바라보는 감정과 태도.</p>
           </article>
         </div>
 
         <section class="summary-block">
-          <h3>관계 서사</h3>
+          <div class="section-label">관계 서사</div>
           <p id="pStory">첫 만남부터 현재까지의 핵심 사건만 짧게 정리합니다.</p>
         </section>
 
         <div class="bottom-grid">
           <section class="summary-block compact">
-            <h3>핵심 포인트</h3>
+            <div class="section-label">핵심 포인트</div>
             <p id="pPoints">꼭 살려야 하는 분위기와 감정선을 적습니다.</p>
           </section>
 
-          <section class="summary-block compact warning">
-            <h3>필수 및 주의사항</h3>
+          <section class="summary-block compact">
+            <div class="section-label">필수 및 주의사항</div>
             <p id="pMustNever">필수 요소와 피하고 싶은 해석을 적습니다.</p>
           </section>
         </div>
 
         <section class="reference-block">
-          <h3>참고 자료</h3>
+          <div class="section-label">참고 자료</div>
           <p id="pReference">외관 이미지 · 기존 연성 · 플레이리스트 등</p>
         </section>
 
         <footer class="sheet-footer">
           <span>PAIR SUMMARY</span>
-          <span>for writing commission</span>
+          <span>FOR WRITING COMMISSION</span>
         </footer>
       </div>
     </section>

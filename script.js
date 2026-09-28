@@ -1,6 +1,7 @@
-const STORAGE_KEY = "pairSummaryTemplateV1";
+const STORAGE_KEY = "pairSummaryTemplateV2";
 
 const defaults = {
+  theme: "#6b6280",
   work: "작품명",
   pair: "페어명",
   names: "캐릭터 A × 캐릭터 B",
@@ -63,10 +64,36 @@ function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
 }
 
+function hexToRgb(hex) {
+  const clean = hex.replace("#", "");
+  if (!/^[0-9a-fA-F]{6}$/.test(clean)) return null;
+  return {
+    r: parseInt(clean.slice(0, 2), 16),
+    g: parseInt(clean.slice(2, 4), 16),
+    b: parseInt(clean.slice(4, 6), 16)
+  };
+}
+
+function mixWithWhite(hex, amount = 0.82) {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return "#ece9f0";
+  const mix = c => Math.round(c + (255 - c) * amount);
+  return `rgb(${mix(rgb.r)}, ${mix(rgb.g)}, ${mix(rgb.b)})`;
+}
+
+function applyTheme(hex) {
+  if (!/^#[0-9a-fA-F]{6}$/.test(hex)) return;
+  document.documentElement.style.setProperty("--accent", hex);
+  document.documentElement.style.setProperty("--accent-soft", mixWithWhite(hex));
+  document.getElementById("themeColor").value = hex;
+  document.getElementById("themeHex").value = hex.toUpperCase();
+}
+
 function fillEditor() {
   document.querySelectorAll("[data-key]").forEach(el => {
     el.value = state[el.dataset.key] ?? "";
   });
+  applyTheme(state.theme || defaults.theme);
 }
 
 function render() {
@@ -79,6 +106,8 @@ function render() {
     `${state.aName || "A"} → ${state.bName || "B"}`;
   document.getElementById("bArrowTitle").textContent =
     `${state.bName || "B"} → ${state.aName || "A"}`;
+
+  applyTheme(state.theme || defaults.theme);
 }
 
 document.querySelectorAll("[data-key]").forEach(el => {
@@ -87,6 +116,22 @@ document.querySelectorAll("[data-key]").forEach(el => {
     saveState();
     render();
   });
+});
+
+document.getElementById("themeColor").addEventListener("input", e => {
+  state.theme = e.target.value;
+  saveState();
+  applyTheme(state.theme);
+});
+
+document.getElementById("themeHex").addEventListener("input", e => {
+  let value = e.target.value.trim();
+  if (!value.startsWith("#")) value = "#" + value;
+  if (/^#[0-9a-fA-F]{6}$/.test(value)) {
+    state.theme = value;
+    saveState();
+    applyTheme(value);
+  }
 });
 
 document.getElementById("resetBtn").addEventListener("click", () => {
@@ -127,7 +172,7 @@ document.getElementById("downloadPngBtn").addEventListener("click", async () => 
   try {
     const canvas = await html2canvas(target, {
       scale: 2,
-      backgroundColor: "#fbfaf8",
+      backgroundColor: "#fbfbfa",
       useCORS: true
     });
     canvas.toBlob(blob => {
