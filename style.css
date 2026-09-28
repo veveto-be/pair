@@ -391,3 +391,57 @@ textarea:focus {
 
   .sheet-head h2 { font-size: 32px; }
 }
+
+
+/* v3 HARD SQUARE OVERRIDE — 둥근 모서리 완전 제거 */
+*,
+*::before,
+*::after {
+  border-radius: 0 !important;
+}
+
+button,
+input,
+textarea,
+select,
+fieldset,
+.editor-panel,
+.theme-row,
+.sheet,
+.sheet-head,
+.keyword-box,
+.summary-block,
+.character-card,
+.feeling-grid,
+.feeling-grid article,
+.bottom-grid,
+.reference-block,
+.btn,
+.file-btn,
+#themeColor,
+#themeHex {
+  border-radius: 0 !important;
+}
+
+/* 브라우저 기본 둥근 UI까지 최대한 제거 */
+input[type="color"] {
+  appearance: none;
+  -webkit-appearance: none;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 0 !important;
+}
+
+input[type="color"]::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+input[type="color"]::-webkit-color-swatch {
+  border: 0;
+  border-radius: 0 !important;
+}
+
+input[type="color"]::-moz-color-swatch {
+  border: 0;
+  border-radius: 0 !important;
+}
